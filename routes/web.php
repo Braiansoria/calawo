@@ -14,11 +14,20 @@ use App\Category;
 |
 */
 
-Route::get('/admin', function () {
-   return view('admin.category.create');
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/admin', function () {
+   return view('plantilla.admin');
+})->name('admin');
+
+Route::get('/', function() {
+return view ('tienda.index');
+});
+
+Route::resource('admin/category','Admin\AdminCategoryController')->names('admin.category');
+
+Route::get('cancelar/{ruta}', function ($ruta){
+ return redirect()->route('admin.category.index')->with('datos','Accion cancelada');
+})->name('cancelar');

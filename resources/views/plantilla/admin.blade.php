@@ -199,6 +199,35 @@
               </li>
             </ul>
           </li>
+
+          <!--Categorias -->
+
+           <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Categorias
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="{{ route('admin.category.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de categorias </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.category.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Crear categoria </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
           <li class="nav-item">
             <a href="../widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -706,9 +735,11 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">@yield('titulo')</li>
-            </ol>
+            <li class="breadcrumb-item"><a href="{{route('admin')}}">Inicio</a></li>
+            
+            @yield('breadcrumb')
+            
+             </ol> 
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -716,7 +747,26 @@
 
     <!-- Main content -->
     <section class="content">
+ 
+        @if ( session('datos') )
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+               {{ session('datos')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif 
+        
+        @if ( session('cancelar') )
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+           {{ session('cancelar')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+       @endif  
 
+             
           @yield('contenido')
 
     </section>

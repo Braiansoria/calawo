@@ -1,8 +1,8 @@
 
 @extends('plantilla.admin')
 
-@section('titulo', 'Crear Categoria')
- 
+@section('titulo', 'Editar Categoria')
+  
 @section('breadcrumb')
 
 <li class="breadcrumb-item"><a href="{{route('admin.category.index')}}">Categorias</a></li>  
@@ -13,8 +13,13 @@
 @section('contenido')
 
 <div id="apicategory">
-  <form action="{{ route('admin.category.store') }}" method="POST">
+  <form action="{{ route('admin.category.update',$cat->id) }}" method="POST">
    @csrf
+   @method('PUT')
+
+  <span style="display:none;" id="editar">{{ $editar}}</span>
+  <span style="display:none;" id="nombretemp">{{ $cat->nombre}}</span>
+
 <!-- Default box -->
 <div class="card">
     <div class="card-header">
@@ -35,22 +40,25 @@
                     @blur="getCategory"
                     @focus = "div_aparecer=false"
                     
-                    class="form-control" type="text" name="nombre" id="nombre">
+                    class="form-control" type="text" name="nombre" id="nombre" value="{{ $cat->nombre }}                    ">
                     <label for="slug">Slug</label>
-                    <input v-model="generarSlug" class="form-control" type="text" name="slug" id="slug">
+                    <input readonly v-model="generarSlug" class="form-control" type="text" name="slug" id="slug" value="{{ $cat->slug }}                    ">
                     <div v-if="div_aparecer" v-bind:class="div_clase_slug">
                       @{{ div_mensajeslug}}
                     </div>
                     <br v-if="div_aparecer">
                     <label for="descripcion">Descipcion</label>
-                    <textarea  class="form-control" name="descripcion" id="descripcion" cols="30" rows="5"></textarea>
+                    <textarea  class="form-control" name="descripcion" id="descripcion" cols="30" rows="5">{{ $cat->descripcion }}
+                    </textarea>
                 </div>
             
              </div>
             <!-- /.card body -->
+
             <div class="card-footer">
 
-            <a class="btn btn-danger" href="{{ route('cancelar', 'admin.category.index')}}">Cancelar</a>
+              <a class="btn btn-danger" href="{{ route('cancelar', 'admin.category.index')}}">Cancelar</a>
+
                    <input 
             
                    :disabled ='deshabilitar_boton==1'

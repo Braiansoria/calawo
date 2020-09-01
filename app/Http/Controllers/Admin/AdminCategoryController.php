@@ -8,6 +8,10 @@ use App\Category;
 
 class AdminCategoryController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,6 +49,12 @@ class AdminCategoryController extends Controller
         $cat->save();
       
         return $cat;*/
+ 
+        $request->validate([
+            'nombre'=>'required|max:50|unique:categories,nombre',
+            'slug'=>'required|max:50|unique:categories,slug',
+            'descripcion'=>'max:2',
+        ]);
 
         Category::create($request->all());
 
@@ -89,6 +99,12 @@ class AdminCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $cat= Category::findOrFail($id);
+
+        $request->validate([
+            'nombre'=>'required|max:50|unique:categories,nombre,'.$cat->id,
+            'slug'=>'required|max:50|unique:categories,slug,'.$cat->id,
+            'descripcion'=>'max:2',
+        ]);
         /*$cat->nombre = $request->nombre;
         $cat->slug = $request->slug;
         $cat->descripcion = $request->descripcion;

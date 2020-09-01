@@ -37,7 +37,10 @@
                     
                     class="form-control" type="text" name="nombre" id="nombre">
                     <label for="slug">Slug</label>
-                    <input v-model="generarSlug" class="form-control" type="text" name="slug" id="slug">
+                    <input 
+                    readonly
+                    v-model="generarSlug"
+                    class="form-control" type="text" name="slug" id="slug">
                     <div v-if="div_aparecer" v-bind:class="div_clase_slug">
                       @{{ div_mensajeslug}}
                     </div>
